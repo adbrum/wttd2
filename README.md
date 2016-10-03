@@ -3,7 +3,6 @@
 Sistema de Eventos encomendado pela Morena.
 
 [![Build Status](https://travis-ci.org/adbrum/eventex.svg?branch=master)](https://travis-ci.org/adbrum/eventex)
-[![Code Health](https://landscape.io/github/adbrum/eventex/master/landscape.svg?style=flat)](https://landscape.io/github/adbrum/eventex/master)
 
 ## Como desenvolver?
 
