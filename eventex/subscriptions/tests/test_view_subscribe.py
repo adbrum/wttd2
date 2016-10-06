@@ -19,7 +19,7 @@ class SubscribeGet(TestCase):
 
     def test_html(self):
         """HTML must contain input tags"""
-        tags = (('<form',1),
+        tags = (('<form', 1),
                 ('<input', 6),
                 ('type="text"', 3),
                 ('type="email"', 1),
@@ -41,12 +41,13 @@ class SubscribeGet(TestCase):
 
 class SubscribePostValid(TestCase):
     def setUp(self):
-        data = dict(name='Adriano Regis', cpf='12345678901', email='adbrum@outlook.com', phone='966080448')
+        data = dict(name='Adriano Regis', cpf='12345678901',
+                    email='adbrum@outlook.com', phone='966080448')
         self.response = self.client.post('/inscricao/', data)
 
     def test_post(self):
-        """Valid POST should redirect to /inscricao/"""
-        self.assertEqual(302, self.response.status_code)
+        """Valid POST should redirect to /inscricao/1/"""
+        self.assertRedirects(self.response, '/inscricao/1/')
 
     def test_send_subscribe_email(self):
         self.assertEqual(1, len(mail.outbox))
@@ -78,8 +79,8 @@ class SubscribePostInvalid(TestCase):
         self.assertFalse(Subscription.objects.exists())
 
 
-class SubscribeSuccessMessage(TestCase):
-    def test_message(self):
-        data = dict(name='Adriano Regis', cpf='12345678901', email='adbrum@outlook.com', phone='966080448')
-        self.response = self.client.post('/inscricao/', data, follow=True)
-        self.assertContains(self.response, 'Inscrição realizada com sucesso!')
+# class SubscribeSuccessMessage(TestCase):
+#     def test_message(self):
+#         data = dict(name='Adriano Regis', cpf='12345678901', email='adbrum@outlook.com', phone='966080448')
+#         self.response = self.client.post('/inscricao/', data, follow=True)
+#         self.assertContains(self.response, 'Inscrição realizada com sucesso!')
