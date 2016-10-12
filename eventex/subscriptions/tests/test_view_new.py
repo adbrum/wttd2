@@ -79,8 +79,18 @@ class SubscriprionsNewPostInvalid(TestCase):
         self.assertFalse(Subscription.objects.exists())
 
 
+class TemplateRegressionTrest(TestCase):
+    def test_template_has_non_field_error(self):
+        invalid_data= dict(name='Adriano Regis', cpf='12345678901')
+        response = self.client.post(r('subscriptions:new'), invalid_data)
+
+        self.assertContains(response, '<ul class="errorlist nonfield">')
+
+
 # class SubscribeSuccessMessage(TestCase):
 #     def test_message(self):
 #         data = dict(name='Adriano Regis', cpf='12345678901', email='adbrum@outlook.com', phone='966080448')
 #         self.response = self.client.post('/inscricao/', data, follow=True)
 #         self.assertContains(self.response, 'Inscrição realizada com sucesso!')
+
+
