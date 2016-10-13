@@ -33,7 +33,8 @@ def create(request):
         return render(request, 'subscriptions/subscription_form.html',
                       {'form': form})
 
-    subscription = Subscription.objects.create(**form.cleaned_data)
+    subscription = form.save()# Quando é utilizado o forms.ModelForm
+    # subscription = Subscription.objects.create(**form.cleaned_data)# Quando é utilizado o forms.Form no form.
 
     """Caso de sucesso!"""
 
