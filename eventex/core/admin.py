@@ -1,9 +1,15 @@
 from django.contrib import admin
 
-from eventex.core.models import Speaker
+from eventex.core.models import Speaker, Contact
+
+
+class ContactInline(admin.TabularInline):
+    model = Contact
+    extra = 1 # Mostra o números de campos vazios a serem preenchidos por padrão é 3
 
 
 class SpeakerModelAdmin(admin.ModelAdmin):
+    inlines = [ContactInline] # utiliza um lista com as classes do Inline (ContactInline)
     prepopulated_fields = {'slug': ('name',)}  # Recebe o valor do campo name e preenche o campo slug.
     list_display = ['name', 'photo_img', 'website_link']
 
@@ -21,3 +27,4 @@ class SpeakerModelAdmin(admin.ModelAdmin):
 
 
 admin.site.register(Speaker, SpeakerModelAdmin)
+
