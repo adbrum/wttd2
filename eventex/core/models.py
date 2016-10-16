@@ -36,6 +36,7 @@ class Contact(models.Model):
     value = models.CharField('valor', max_length=255)
 
     objects = KindQuerySet.as_manager()
+
     # objects = KindContactManager()
     # objects = models.Manager() # Instancia do manager padão do models.
     # emails = EmailContactManager()
@@ -49,17 +50,30 @@ class Contact(models.Model):
         return self.value
 
 
-class Talk(models.Model):
+class Activity(models.Model):
     title = models.CharField('título', max_length=200)
     start = models.TimeField('inicio', blank=True, null=True)
     description = models.TextField('descrição', blank=True)
     speakers = models.ManyToManyField('Speaker', verbose_name='palestrante', blank=True)
 
-    objects = PeriodManager() # Inantia do manager padrão
+    objects = PeriodManager()  # Inantia do manager padrão
 
     class Meta:
+        abstract = True
         verbose_name = 'palestra'
         verbose_name_plural = 'palestras'
 
     def __str__(self):
         return self.title
+
+
+class Talk(Activity):
+    pass  # Herda todos os campos da classe abstrata Activity
+
+
+class Course(Activity):
+    slots = models.IntegerField()  # Herda todos os campos da classe abstrata Activity e adiciona o slots
+
+    class Meta:
+        verbose_name = 'curso'
+        verbose_name_plural = 'cursos'
