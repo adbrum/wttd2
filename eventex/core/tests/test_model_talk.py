@@ -44,6 +44,9 @@ class TalkModelTest(TestCase):
     def test_str(self):
         self.assertEqual('Título da Palestra', str(self.talk))
 
+    def test_ordering(self):
+        self.assertListEqual(['start'], Talk._meta.ordering)
+
 
 class PeriodManagerTest(TestCase):
     def setUp(self):
@@ -83,7 +86,7 @@ class CourseModelTest(TestCase):
             slug='adriano-regis',
             website='http://adriano.com'
         )
-        self.assertEqual(1,self.course.speakers.count())
+        self.assertEqual(1, self.course.speakers.count())
 
     def test_str(self):
         self.assertEqual('Título do Curso', str(self.course))
@@ -91,7 +94,10 @@ class CourseModelTest(TestCase):
     def test_manager(self):
         self.assertIsInstance(Course.objects, PeriodManager)
 
-# from django.test import TestCase
+    def test_ordering(self):
+        self.assertListEqual(['start'], Course._meta.ordering)
+
+                # from django.test import TestCase
 # from eventex.core.models import Talk
 #
 #
